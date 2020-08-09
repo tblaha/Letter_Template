@@ -1,0 +1,187 @@
+ \documentclass[
+  fontsize=11pt,
+  paper=a4,
+  %foldmarks=on,           % Print foldmarks, all 3
+  %foldmarks=Pbt,           % Print foldmarks, middle only
+  foldmarks=off,           % Print no foldmarks
+  enlargefirstpage=on,    % More space on first page
+  fromalign=right,        % Placement of name in letter head
+  fromphone=off,           % Turn on phone number of sender
+  fromemail=off,
+  fromlogo=off,
+  fromrule=on,            % Rule after address in letter head
+  fromrule=aftername,     % Rule after sender name in letter head
+  location=on,
+  addrfield=on,           % Adress field for envelope with window
+  backaddress=on,         % Sender address in this window
+  subject=afteropening,   % Placement of subject
+  pagenumber=foot,
+]{scrlttr2}
+\LoadLetterOption{DIN} % Din 5008, Variante B
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% General Settings %
+%%%%%%%%%%%%%%%%%%%%
+\usepackage{blindtext} % ignore this, just for testing
+\usepackage{graphicx}  % Primary graphic path
+\graphicspath{{./}}
+\usepackage{calc}
+\usepackage{hyperref}
+\usepackage{lipsum}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font and Language settings %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}% http://ctan.org/pkg/babel
+%\usepackage[UKenglish]{babel}% http://ctan.org/pkg/babel
+\usepackage[UKenglish]{isodate} % Proper date format 1 January 2016
+\cleanlookdateon                % Proper date format 1 January 2016
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% General Format parameters %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[lmargin=25mm, rmargin=20mm, bmargin=30mm, tmargin=25mm]{geometry}
+\newcommand{\vtab}{\vspace{2.5mm}\noindent}	%initialize the vtab command
+\setlength{\parskip}{3pt}					%a little space between pars
+\setlength{\parindent}{0pt}					%no par indent for "modern" look
+
+%%%%%%%%%%%%%%%
+% Fonts Modes %
+%%%%%%%%%%%%%%%
+\setkomafont{fromname}{\sffamily \bfseries \Large \vspace{-2pt}}
+\setkomafont{fromaddress}{\mdseries}	% mdseries = serif; sffamily = sans serif
+\setkomafont{toname}{\mdseries}
+\setkomafont{toaddress}{\mdseries}
+\setkomafont{pagenumber}{\sffamily}
+\setkomafont{subject}{\bfseries \sffamily \large}
+\setkomafont{backaddress}{\mdseries}
+
+%%%%%%%%%%%%%%%%%%%%
+% Serveral "hacks" %
+%%%%%%%%%%%%%%%%%%%%
+%%%Unindent the signature image
+\makeatletter
+	\@setplength{sigbeforevskip}{0pt}
+\makeatother
+\renewcommand*{\raggedsignature}{\raggedright}
+
+%%%Remove Footer on first page:
+%\makeatletter
+%   \@setplength{firstfootvpos}{310mm}
+%\makeatother
+
+\makeatletter
+  %\@setplength{backaddrheight}{0pt}% because backaddress=off
+  \@setplength{toaddrhpos}{2cm}%distance from left
+  \@setplength{toaddrvpos}{4.5cm}%distance from top
+  \@setplength{toaddrheight}{4.5cm}%height of the addressbox
+  \@setplength{toaddrwidth}{8cm}% width of the addressbox
+\makeatother
+
+%%%Din position of location field
+\makeatletter
+  \@setplength{lochpos}{22mm} %From right edge
+  \@setplength{locwidth}{63mm} % used to be 53
+  \@setplength{locheight}{50mm}
+\makeatother
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Edit only the following!                                                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Sender Variables %
+%%%%%%%%%%%%%%%%%%%%
+\setkomavar{fromname}{John Doe}
+\setkomavar{fromaddress}{Freedom Drive 1960 what\\12345 City\\Country}
+\setkomavar{fromphone}{+31 6 123 456 78}
+\setkomavar{fromemail}{email@example.com}
+\setkomavar{backaddressseparator}{\ \textperiodcentered \ }
+\setkomavar{signature}{\hspace{5mm}\includegraphics[scale=1]{Signature}\\John Doe} % with scanned signature
+%\setkomavar{signature}{\vspace{10mm} \\ John Doe} % without scanned signature
+\setkomavar{place}{Some City}
+\setkomavar{date}{\today}
+\setkomavar{enclseparator}{: }
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Location Variables %
+%%%%%%%%%%%%%%%%%%%%%%
+\setkomavar{location}{
+\hfill\vspace{-10pt}%
+\begin{tabbing}
+	\hspace{35mm} \= \hspace{25mm} \= \kill % Spacing within the block
+	Reference Number        \> 123456789\\
+	Client Number           \> 202012345\\
+	Telephon                \> \usekomavar{fromphone}\\
+	E-Mail                  \> \usekomavar{fromemail}
+\end{tabbing}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Addressee                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+  \begin{letter}{%
+    Addressee \\
+    Address line 1 \\
+    Address line 2 \\
+    Address line 3 \\
+    1234 AB Stad \\
+    les Pays-Bas
+    }
+    
+    
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Start of Actual Content of the Letter         %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+    \setkomavar{subject}{Letter of Motivation supporting my \LaTeX{} Template}
+    %\small %If smaller font is needed to fit on page
+    \opening{To whom it may concern,} % 100 words
+    
+    I consider it the best.
+    
+    \lipsum[1-4]  \\
+    
+    
+    \textbf{Experiences I have had with other templates}
+    
+    They were bad. 
+    
+    \lipsum[5]
+    
+	
+    \closing{Met vriendelijke groet,}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%
+    % Enclosures          %
+    %%%%%%%%%%%%%%%%%%%%%%%
+    
+    \encl{\textit{Proof (2 pages),\\ More Proof (7 pages)}}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%
+    % End of Tex Document %
+    %%%%%%%%%%%%%%%%%%%%%%%
+    
+    \end{letter}
+\end{document}
+
+
